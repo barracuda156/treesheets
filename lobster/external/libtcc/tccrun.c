@@ -1119,6 +1119,9 @@ static void rt_getcontext(ucontext_t *uc, rt_context *rc)
 #elif defined(__riscv)
     rc->ip = uc->uc_mcontext.__gregs[REG_PC];
     rc->fp = uc->uc_mcontext.__gregs[REG_S0];
+#elif defined(__POWERPC__) && defined(__APPLE__)
+    rc->ip = uc->uc_mcontext->__ss.__srr0;
+    rc->fp = uc->uc_mcontext->__ss.__r30;
 #endif
 }
 
